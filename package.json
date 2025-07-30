@@ -11,7 +11,7 @@
     "build": "pnpm --filter @lightstrikelabs/cloudflare-next build",
     "start": "pnpm --filter @lightstrikelabs/cloudflare-next start",
     "lint": "pnpm --filter @lightstrikelabs/cloudflare-next lint",
-    "deploy": "pnpm --filter @lightstrikelabs/cloudflare-next deploy",
+    "deploy:cf": "pnpm --filter @lightstrikelabs/cloudflare-next run deploy",
     "preview": "pnpm --filter @lightstrikelabs/cloudflare-next preview",
     "cf-typegen": "pnpm --filter @lightstrikelabs/cloudflare-next cf-typegen"
   },

@@ -5,6 +5,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "cloudflare-nextjs-demo-lightstrike",
+	"account_id": "5a577674beea3a57841cc9c35b376176",
 	"main": ".open-next/worker.js",
 	"compatibility_date": "2025-03-01",
 	"compatibility_flags": [

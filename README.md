@@ -38,7 +38,7 @@ You can start editing the page by modifying `apps/next/src/app/page.tsx`. The pa
 - `pnpm build` - Build the application for production
 - `pnpm start` - Start the production server
 - `pnpm lint` - Run ESLint
-- `pnpm deploy` - Deploy to Cloudflare Workers
+- `pnpm deploy:cf` - Deploy to Cloudflare Workers
 - `pnpm preview` - Preview the deployment
 - `pnpm cf-typegen` - Generate Cloudflare types
 
@@ -53,10 +53,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Cloudflare Workers
 
-This project is configured to deploy to Cloudflare Workers using OpenNext. Use the following commands:
+This project is configured to deploy to Cloudflare Workers using OpenNext. The deployment is pre-configured to use the "LS DXG" account.
 
 ```bash
-pnpm deploy
+pnpm deploy:cf
 ```
+
+### Configuration
+
+The project is configured with:
+- **Account ID**: `5a577674beea3a57841cc9c35b376176` (LS DXG)
+- **Worker Name**: `cloudflare-nextjs-demo-lightstrike`
+- **Live URL**: https://cloudflare-nextjs-demo-lightstrike.ls-dxg.workers.dev
+
+To change the account, update the `account_id` in `apps/next/wrangler.jsonc`.
 
 Check out the [OpenNext documentation](https://opennext.js.org/) for more details about deploying Next.js to Cloudflare Workers.
