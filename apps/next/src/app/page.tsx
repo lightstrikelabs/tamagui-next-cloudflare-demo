@@ -1,4 +1,7 @@
+'use client'
+
 import Image from "next/image";
+import { Button, Text, YStack, XStack } from "@lightstrikelabs/tamagui";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -13,6 +16,31 @@ export default function Home() {
           height={38}
           priority
         />
+        
+        <YStack gap="$4" alignItems="center">
+          <Text fontSize="$6" fontWeight="bold">
+            Welcome to Next.js with Tamagui!
+          </Text>
+          
+          <XStack gap="$3">
+            <Button size="$4" theme="blue">
+              Primary Button
+            </Button>
+            <Button size="$4" variant="outlined">
+              Secondary Button
+            </Button>
+          </XStack>
+          
+          <YStack gap="$2">
+            <Text fontSize="$4">
+              YStack and XStack are working perfectly!
+            </Text>
+            <Text fontSize="$3">
+              This demonstrates vertical and horizontal stacking with proper spacing.
+            </Text>
+          </YStack>
+        </YStack>
+
         <ol>
           <li>
             Get started by editing <code>src/app/page.tsx</code>.

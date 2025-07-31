@@ -1,0 +1,27 @@
+{
+  "name": "@lightstrikelabs/tamagui",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.ts",
+  "types": "index.ts",
+  "dependencies": {
+    "@tamagui/animations-react-native": "^1.132.15",
+    "@tamagui/config": "^1.132.15",
+    "@tamagui/core": "^1.132.15",
+    "@tamagui/font-inter": "^1.132.15",
+    "@tamagui/next-theme": "^1.132.15",
+    "@tamagui/polyfill-dev": "^1.132.15",
+    "@tamagui/shorthands": "^1.132.15",
+    "@tamagui/stacks": "^1.132.15",
+    "@tamagui/theme-base": "^1.132.15",
+    "@tamagui/themes": "^1.132.15",
+    "tamagui": "^1.132.15"
+  },
+  "devDependencies": {
+    "@tamagui/babel-plugin": "^1.74.21",
+    "@tamagui/metro-plugin": "^1.74.21",
+    "@tamagui/next-plugin": "^1.132.15",
+    "@tamagui/vite-plugin": "^1.74.21",
+    "typescript": "^5"
+  }
+}
