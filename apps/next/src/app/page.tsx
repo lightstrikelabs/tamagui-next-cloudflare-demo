@@ -17,12 +17,12 @@ export default function Home() {
           priority
         />
         
-        <YStack gap="$4">
+        <YStack gap="$4" items="center">
           <Text fontSize="$6" fontWeight="bold">
             Welcome to Next.js with Tamagui!
           </Text>
           
-          <XStack gap="$3">
+          <XStack gap="$3" justify="center">
             <Button size="$4" theme="blue">
               Primary Button
             </Button>
@@ -33,7 +33,7 @@ export default function Home() {
           
           <YStack gap="$2">
             <Text fontSize="$4">
-              YStack and XStack are working (almost) perfectly!
+              YStack and XStack are working perfectly!
             </Text>
             <Text fontSize="$3">
               This demonstrates vertical and horizontal stacking with proper spacing.
