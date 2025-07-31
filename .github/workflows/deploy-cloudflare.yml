@@ -1,0 +1,81 @@
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches: [main, staging]
+    paths:
+      - 'apps/next/**'
+  pull_request:
+    branches: [main, staging]
+    paths:
+      - 'apps/next/**'
+
+jobs:
+  deploy:
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Deploy to Cloudflare
+        id: deploy
+        run: |
+          cd apps/next
+          DEPLOY_OUTPUT=$(pnpm run deploy 2>&1)
+          echo "$DEPLOY_OUTPUT"
+          DEPLOY_URL=$(echo "$DEPLOY_OUTPUT" | grep -o -E 'https://[^[:space:]]+\.workers\.dev' | head -n1 || true)
+          echo "deployment_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+
+      - name: Comment deployment URL
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const environment = '${{ github.ref_name == 'main' && 'production' || 'staging' }}';
+            const deploymentUrl = '${{ steps.deploy.outputs.deployment_url }}';
+            
+            // Build comment lines
+            const lines = [
+              '🚀 **Deployment Complete!**',
+              '',
+              `**Environment:** ${environment}`,
+              `**Branch:** \`${{ github.head_ref }}\``,
+              `**Commit:** \`${{ github.sha }}\``
+            ];
+            
+            if (deploymentUrl) {
+              lines.push('', `**Deployment URL:** ${deploymentUrl}`);
+            } else {
+              lines.push('', 'Your changes have been deployed to Cloudflare. Check your Cloudflare dashboard for the deployment URL.');
+            }
+            
+            lines.push('', '---', '*Deployed by GitHub Actions*');
+            
+            const comment = lines.join('\n');
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

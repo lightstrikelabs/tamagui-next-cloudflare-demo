@@ -17,12 +17,12 @@ export default function Home() {
           priority
         />
         
-        <YStack gap="$4" alignItems="center">
+        <YStack gap="$4" items="center">
           <Text fontSize="$6" fontWeight="bold">
             Welcome to Next.js with Tamagui!
           </Text>
           
-          <XStack gap="$3">
+          <XStack gap="$3" justify="center">
             <Button size="$4" theme="blue">
               Primary Button
             </Button>
