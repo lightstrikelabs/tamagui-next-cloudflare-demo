@@ -33,7 +33,7 @@ export default function Home() {
           
           <YStack gap="$2">
             <Text fontSize="$4">
-              YStack and XStack are working perfectly!
+              YStack and XStack are working (almost) perfectly!
             </Text>
             <Text fontSize="$3">
               This demonstrates vertical and horizontal stacking with proper spacing.

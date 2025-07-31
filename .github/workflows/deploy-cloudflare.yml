@@ -34,6 +34,51 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Deploy to Cloudflare
+        id: deploy
         run: |
           cd apps/next
-          pnpm run deploy
+          DEPLOY_OUTPUT=$(pnpm run deploy 2>&1)
+          echo "deploy_output<<EOF" >> $GITHUB_OUTPUT
+          echo "$DEPLOY_OUTPUT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "$DEPLOY_OUTPUT"
+
+      - name: Comment deployment URL
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const environment = '${{ github.ref_name == 'main' && 'production' || 'staging' }}';
+            const deployOutput = '${{ steps.deploy.outputs.deploy_output }}';
+
+            // Try to extract URL from deploy output
+            let deploymentUrl = '';
+            const urlMatch = deployOutput.match(/https:\/\/[^\s]+\.workers\.dev/);
+            if (urlMatch) {
+              deploymentUrl = urlMatch[0];
+            }
+
+            // Build comment without leading indentation
+            const lines = [
+              '🚀 **Deployment Complete!**',
+              '',
+              `**Environment:** ${environment}`,
+              `**Branch:** \`${{ github.head_ref }}\``,
+              `**Commit:** \`${{ github.sha }}\``
+            ];
+            let comment = lines.join('\n');
+
+            if (deploymentUrl) {
+              comment += `\n\n**Deployment URL:** ${deploymentUrl}`;
+            } else {
+              comment += `\n\nYour changes have been deployed to Cloudflare. Check your Cloudflare dashboard for the deployment URL.`;
+            }
+
+            comment += `\n\n---\n*Deployed by GitHub Actions*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
