@@ -15,6 +15,7 @@
     "@tamagui/stacks": "^1.132.15",
     "@tamagui/theme-base": "^1.132.15",
     "@tamagui/themes": "^1.132.15",
+    "@tamagui/web": "^1.132.15",
     "tamagui": "^1.132.15"
   },
   "devDependencies": {
