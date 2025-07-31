@@ -17,7 +17,7 @@ export default function Home() {
           priority
         />
         
-        <YStack gap="$4" alignItems="center">
+        <YStack gap="$4">
           <Text fontSize="$6" fontWeight="bold">
             Welcome to Next.js with Tamagui!
           </Text>
